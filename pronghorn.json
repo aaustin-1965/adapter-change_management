@@ -1,0 +1,6 @@
+{
+  "id": "@acme/adapter-change_management",
+  "type": "Adapter",
+  "export": "ServiceNowAdapter",
+  "src": "main.js"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "ServiceNow Change",
+  "properties": {
+    "url": "https://dev69429.service-now.com/",
+    "auth": {
+      "username": "admin",
+      "password": "9xa9VHJVdunO"
+    },
+    "serviceNowTable": "change_request"
+  },
+  "type": "ServiceNowAdapter",
+  "brokers": [],
+  "groups": []
+}
