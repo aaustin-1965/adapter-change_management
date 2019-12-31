@@ -2,5 +2,28 @@
   "id": "@acme/adapter-change_management",
   "type": "Adapter",
   "export": "ServiceNowAdapter",
-  "src": "main.js"
+  "src": "main.js",
+  "roles": [
+    "admin",
+    "engineer",
+    "operator"
+  ],
+  "methods": [
+    {
+      "name": "getRecord",
+      "summary": "Get First Change Ticket",
+      "description": "Get the first ServiceNow change management ticket",
+      "input": [],
+      "output": {
+        "name": "changeTicket",
+        "type": "object",
+        "description": "The first ServiceNow change management ticket.",
+        "schema": {
+          "title": "changeTicket",
+          "$ref": "changeRequest#/definitions/changeTicket"
+        }
+      },
+      "task": true
+    }
+  ]
 }

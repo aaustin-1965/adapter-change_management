@@ -46,43 +46,13 @@ class ServiceNowAdapter extends EventEmitter {
      * Note how objects call their static methods.
      * Static methods are called as methods of the class.
      */
-    this.props = ServiceNowAdapter.validateProperties(adapterProperties);
+    this.props = adapterProperties;
     this.connector = new ServiceNowConnector({
       url: this.props.url,
       username: this.props.auth.username,
       password: this.props.auth.password,
       serviceNowTable: this.props.serviceNowTable
     });
-  }
-
-  /**
-   * Property validation was necessary under pronghorn-core release 5
-   *   and earlier. Release 6 introduces JSON schema for this purpose,
-   *   which makes this method unecessary.
-   * @memberof ServiceNowAdapter
-   * @method validateProperties
-   * @summary Validate Properties
-   * @description Validates proper properties exist for adapter.
-   *
-   * @param {ServiceNowAdapter~adapterProperties} properties
-   */
-  static validateProperties(properties) {
-    if (!properties.url) {
-      throw new Error('ServiceNowAdapter: adapter property "url" required');
-    }
-    if (!properties.auth) {
-      throw new Error('ServiceNowAdapter: adapter property "auth" required');
-    }
-    if (!properties.auth.username) {
-      throw new Error('ServiceNowAdapter: adapter property "auth.username" required');
-    }
-    if (!properties.auth.password) {
-      throw new Error('ServiceNowAdapter: adapter property "auth.password" required');
-    }
-    if (!properties.serviceNowTable) {
-      throw new Error('ServiceNowAdapter: adapter property "serviceNowTable" required');
-    }
-    return properties;
   }
 
   /**
