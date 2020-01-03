@@ -90,8 +90,8 @@ class ServiceNowAdapter extends EventEmitter {
  * @description Verifies external system is available and healthy.
  *   Calls method emitOnline if external system is available.
  *
- * @param {ServiceNowAdapter~requestCallback} callback - The callback that
- *   handles the response.
+ * @param {ServiceNowAdapter~requestCallback} [callback] - The optional callback
+ *   that handles the response.
  */
 healthcheck(callback) {
  this.getRecord((result, error) => {
@@ -104,33 +104,44 @@ healthcheck(callback) {
    if (error) {
      /**
       * Write this block.
-      * If an error was returned, we need to emit OFFLINE,
-      * log the returned error using IAP's global log object
-      * at an error severity, and call healthcheck's
-      * callback() parameter passing it the error seen.
-      * In the log message, record this.id so an administrator
-      * will know which ServiceNow adapter instance wrote the
-      * log message in case more than one instance is configured.
+      * If an error was returned, we need to emit OFFLINE.
+      * Log the returned error using IAP's global log object
+      * at an error severity. In the log message, record
+      * this.id so an administrator will know which ServiceNow
+      * adapter instance wrote the log message in case more
+      * than one instance is configured.
+      * If an optional IAP callback function was passed to
+      * healthcheck(), execute it passing the error seen as an argument
+      * for the callback's error parameter.
       */
-      this.emitOffline();
-      log.error(`Adapter ${this.id} is offline.`);
-      log.error(error);
-      return callback(null, error);
+     this.emitOffline();
+     log.error(`Adapter ${this.id} is offline.`);
+     log.error(error);
+     if(callback)
+        return callback(null, error);
+     else
+        return;
    } else {
      /**
       * Write this block.
-      * If no runtime problems were detected, emit ONLINE,
-      * log an appropriate message using IAP's global log object
-      * at a debug severity, and call healthcheck's callback()
-      * parameter passing it a useful message argument for its
-      * data parameter.
+      * If no runtime problems were detected, emit ONLINE.
+      * Log an appropriate message using IAP's global log object
+      * at a debug severity.
+      * If an optional IAP callback function was passed to
+      * healthcheck(), execute it passing this function's result
+      * parameter as an argument for the callback functions data
+      * parameter.
       */
-      this.emitOnline();
-      log.debug(`Adapter ${this.id} is online.`);
-      return callback(result);
+     this.emitOnline();
+     log.debug(`Adapter ${this.id} is online.`);
+     if(callback)
+       return callback(result);
+     else
+       return;
    }
  });
 }
+
 
 
   /**
