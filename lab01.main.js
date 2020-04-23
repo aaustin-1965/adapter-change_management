@@ -85,7 +85,7 @@ function get(serviceNowTable, callback) {
     } else if (!validResponseRegex.test(response.statusCode)) {
       console.error('Bad response code.');
       callbackError = response;
-    } else if (response.body.includes('Hibernating Instance')) {
+    } else if (response.body.includes('Instance Hibernating page')) {
       callbackError = 'Service Now instance is hibernating';
       console.error(callbackError);
     } else {
