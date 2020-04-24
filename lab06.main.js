@@ -195,31 +195,7 @@ class ServiceNowAdapter extends EventEmitter {
      * Note how the object was instantiated in the constructor().
      * get() takes a callback function.
      */
-    this.connector.get( (data, error) => {
-      if ( typeof(data) === 'object' ) {
-        if ( data.hasOwnProperty('body') ) {
-          // snowChangeTickets is an array of ServiceNow change ticket objects
-          let snowChangeTickets = JSON.parse(data.body).result;
-          // genericChangeTickets will be an array of generic change ticket objects.
-          let genericChangeTickets = snowChangeTickets.map( element => {
-            return {
-              change_ticket_number: element.number,
-              active: element.active,
-              priority: element.priority,
-              description: element.description,
-              work_start: element.work_start,
-              work_end: element.work_end,
-              change_ticket_key: element.sys_id
-            };
-          });
-          return callback(genericChangeTickets);
-        } else {
-          return callback(null, `Adapter ${this.id} connector.get() returned object didn't have property body.`);
-        }
-      } else {
-        return callback(null, `Adapter ${this.id} connector.get() didn't return an object.`);
-      }
-    });
+    this.connector.get(callback);
   }
 
   /**
@@ -238,30 +214,7 @@ class ServiceNowAdapter extends EventEmitter {
      * Note how the object was instantiated in the constructor().
      * post() takes a callback function.
      */
-    this.connector.post( (data, error) => {
-      if ( typeof(data) === 'object' ) {
-        if ( data.hasOwnProperty('body') ) {
-          // snowChangeTicket is a ServiceNow change ticket object
-          let snowChangeTicket = JSON.parse(data.body).result;
-          log.info(`snowChangeTicket is ${JSON.stringify(snowChangeTicket)}`);
-          // genericChangeTicket is a generic change ticket object.
-          let genericChangeTicket = {
-              change_ticket_number: snowChangeTicket.number,
-              active: snowChangeTicket.active,
-              priority: snowChangeTicket.priority,
-              description: snowChangeTicket.description,
-              work_start: snowChangeTicket.work_start,
-              work_end: snowChangeTicket.work_end,
-              change_ticket_key: snowChangeTicket.sys_id
-          };
-          return callback(genericChangeTicket);
-        } else {
-          return callback(null, `Adapter ${this.id} connector.post() returned object didn't have property body.`);
-        }
-      } else {
-        return callback(null, `Adapter ${this.id} connector.post() didn't return an object.`);
-      }
-    });
+    this.connector.post(callback);
   }
 }
 
