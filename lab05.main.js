@@ -94,52 +94,9 @@ class ServiceNowAdapter extends EventEmitter {
    *   that handles the response.
    */
   healthcheck(callback) {
-    this.getRecord((result, error) => {
-      /**
-       * For this lab, complete the if else conditional
-       * statements that check if an error exists
-       * or the instance was hibernating. You must write
-       * the blocks for each branch.
-       */
-      if (error) {
-        /**
-         * Write this block.
-         * If an error was returned, we need to emit OFFLINE.
-         * Log the returned error using IAP's global log object
-         * at an error severity. In the log message, record
-         * this.id so an administrator will know which ServiceNow
-         * adapter instance wrote the log message in case more
-         * than one instance is configured.
-         * If an optional IAP callback function was passed to
-         * healthcheck(), execute it passing the error seen as an argument
-         * for the callback's errorMessage parameter.
-         */
-        this.emitOffline();
-        log.error(`Adapter ${this.id} is OFFLINE`);
-        log.error(`Adapter ${this.id} healthcheck failed with error: ${error}`);
-        if(callback)
-          return callback(null, error);
-        else
-          return;
-      } else {
-        /**
-          * Write this block.
-          * If no runtime problems were detected, emit ONLINE.
-          * Log an appropriate message using IAP's global log object
-          * at a debug severity.
-          * If an optional IAP callback function was passed to
-          * healthcheck(), execute it passing this function's result
-          * parameter as an argument for the callback function's
-          * responseData parameter.
-          */
-        this.emitOnline();
-        log.info(`Adapter ${this.id} is ONLINE`);
-        if(callback)
-          return callback(result);
-        else
-          return;
-      }
-    });
+    // We will build this method in a later lab. For now, it will emulate
+    // a healthy integration by emmitting ONLINE.
+    this.emitOnline();
   }
 
   /**
